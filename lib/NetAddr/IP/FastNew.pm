@@ -6,6 +6,7 @@ use NetAddr::IP qw(Zero Zeros Ones V4mask V4net netlimit);
 use Socket qw(inet_pton AF_INET AF_INET6);
 use NetAddr::IP::Util;
 # the minimum version I test with.  5.10 doesn't support inet_pton.
+# MSWin32 also doesn't support Socket::inet_pton
 use v5.12.5;
 
 our $VERSION = eval '0.1';
