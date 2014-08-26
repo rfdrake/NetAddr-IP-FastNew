@@ -9,7 +9,7 @@ use NetAddr::IP::Util;
 # MSWin32 also doesn't support Socket::inet_pton
 use v5.12.5;
 
-our $VERSION = eval '0.1';
+our $VERSION = eval '0.2';
 
 =head1 NAME
 
@@ -17,7 +17,7 @@ NetAddr::IP::FastNew - NetAddr::IP new() methods with no validation
 
 =head1 VERSION
 
-0.1
+0.2
 
 =head1 SYNOPSIS
 
