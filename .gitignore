@@ -1,0 +1,7 @@
+/NetAddr-IP-FastNew-*/
+/NetAddr-IP-FastNew-*.tar.gz
+*swp
+*local*
+.build/
+nytprof.out
+nytprof/
