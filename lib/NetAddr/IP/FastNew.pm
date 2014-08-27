@@ -188,20 +188,19 @@ my $masks = {
 
 =head2 new
 
-NO DOCUMENTATION YET
+Right now this just calls NetAddr::IP->new().
 
    my $ip = NetAddr::IP::FastNew->new("127.0.0.1");
 
 =cut
 
 sub new {
-
     # attempt to beat NetAddr::IP speeds by guessing the type of address and
     # initializing it.  This will probably not support nearly as many formats
     # as the original, but will be useful to some users who want something
     # fast and easy.
-
-    my $class = shift; bless {x=>[@_]}, $class;
+    my $class = shift;
+    return NetAddr::IP->new(@_);
 }
 
 
