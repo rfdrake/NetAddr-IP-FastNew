@@ -267,6 +267,29 @@ sub new_ipv4_mask {
     }, 'NetAddr::IP';
 }
 
+=head2 new_ipv4_cidr
+
+Create a real NetAddr::IP object from a IPv4 cidr with almost no
+validation.
+
+This requires the IP address and the cidr in a single argument.
+Anything else will fail in (probably) bad ways.  Validation is completely
+up to the caller is not done here.
+
+   my $ip = NetAddr::IP::FastNew->new_ipv4_cidr("127.0.0.0/24");
+
+=cut
+
+sub new_ipv4_cidr {
+    my $pos = index($_[1],'/');
+    my $ip = substr($_[1], 0, $pos);
+
+    return bless { 'addr' => $zerov6 . inet_pton(AF_INET, $ip),
+                   'mask' => $zerov6 . pack('N', 2**32 - 2**(32 - substr($_[1], $pos+1))),
+                   'isv6' => 0
+                 }, 'NetAddr::IP';
+}
+
 =head2 new_ipv6
 
 Create a real NetAddr::IP object from an IPv6 subnet with no validation.  This
@@ -279,7 +302,7 @@ cidr mask.
 
 sub new_ipv6 {
     my $pos = index($_[1],'/');
-    my $ip = substr($_[1], 0, $pos-1);
+    my $ip = substr($_[1], 0, $pos);
     return bless { 'addr' => inet_pton(AF_INET6, $ip), 'mask' => $masks->{substr($_[1], $pos+1)}, 'isv6' => 1 }, 'NetAddr::IP';
 }
 
