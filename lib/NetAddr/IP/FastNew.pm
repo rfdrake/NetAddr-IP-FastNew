@@ -2,7 +2,7 @@ package NetAddr::IP::FastNew;
 
 use strict;
 use warnings;
-use NetAddr::IP qw(Zero Zeros Ones V4mask V4net netlimit);
+use NetAddr::IP;
 # 1.95 required for inet_pton
 use Socket 1.95 qw(inet_pton AF_INET AF_INET6);
 use NetAddr::IP::Util;
@@ -65,11 +65,10 @@ at your option, any later version of Perl 5 you may have available.
 
 =cut
 
-# local copy for our functions because otherwise it takes 717ns/call to reference
-my $ones = &Ones;
+my $ones = "\377\377\377\377\377\377\377\377\377\377\377\377\377\377\377\377";
 # this is to zero the ipv6 portion of the address.  This is used when we're
 # building IPv4 objects.
-my $zerov6 = pack('n6', (0,0,0,0,0,0));
+my $zerov6 = "\0\0\0\0\0\0\0\0\0\0\0\0";
 
 my $masks = {
     0 => "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0",
