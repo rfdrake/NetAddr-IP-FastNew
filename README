@@ -4,7 +4,7 @@ NAME
 
 VERSION
 
-    0.2
+    0.3
 
 SYNOPSIS
 
@@ -35,7 +35,7 @@ METHODS
 
  new
 
-    NO DOCUMENTATION YET
+    Right now this just calls NetAddr::IP->new().
 
        my $ip = NetAddr::IP::FastNew->new("127.0.0.1");
 
@@ -60,6 +60,17 @@ METHODS
     completely up to the caller is not done here.
 
        my $ip = NetAddr::IP::FastNew->new_ipv4_mask("127.0.0.0", "255.255.255.0");
+
+ new_ipv4_cidr
+
+    Create a real NetAddr::IP object from a IPv4 cidr with almost no
+    validation.
+
+    This requires the IP address and the cidr in a single argument.
+    Anything else will fail in (probably) bad ways. Validation is
+    completely up to the caller is not done here.
+
+       my $ip = NetAddr::IP::FastNew->new_ipv4_cidr("127.0.0.0/24");
 
  new_ipv6
 
