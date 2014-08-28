@@ -3,13 +3,32 @@ package NetAddr::IP::FastNew;
 use strict;
 use warnings;
 use NetAddr::IP qw(Zero Zeros Ones V4mask V4net netlimit);
-use Socket qw(inet_pton AF_INET AF_INET6);
+# 1.95 required for inet_pton
+use Socket 1.95 qw(inet_pton AF_INET AF_INET6);
 use NetAddr::IP::Util;
 # the minimum version I test with.  5.10 doesn't support inet_pton.
 # MSWin32 also doesn't support Socket::inet_pton
 use v5.12.5;
 
-our $VERSION = eval '0.2';
+# The following code is from spamassassin.  I may use this to workaround Socket issues, but it only
+# helps if Socket6 is available.  Currently this only affects two platforms on
+# cpantesters.  OpenBSD (5.5) and GNUkfreebsd (8.1), so they could just upgrade to a
+# version of Socket.pm that supports inet_pton (they're both running 1.94 so
+# they only have to go up to 1.95)
+
+# # try to load inet_pton from Socket or Socket6
+# my $ip6 = eval {
+#     require Socket;
+#     Socket->VERSION(1.95);
+#     Socket->import( 'inet_pton' );
+#     1;
+# } || eval {
+#     require Socket6;
+#     Socket6->import( 'inet_pton' );
+#     1;
+# };
+
+our $VERSION = eval '0.3';
 
 =head1 NAME
 
@@ -17,7 +36,7 @@ NetAddr::IP::FastNew - NetAddr::IP new() methods with no validation
 
 =head1 VERSION
 
-0.2
+0.3
 
 =head1 SYNOPSIS
 
