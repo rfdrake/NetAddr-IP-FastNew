@@ -264,8 +264,7 @@ sub new {
 =head2 new_ipv4
 
 Create a real NetAddr::IP from a single IPv4 address with almost no
-validation.  This has more overhead than the FastNew new() but it's much
-faster if you make use of the IP object.
+validation.
 
 This only takes one argument, the single IP address.  Anything else will fail
 in (probably) bad ways.  Validation is completely up to you and is not done
