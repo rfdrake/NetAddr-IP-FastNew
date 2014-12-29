@@ -28,7 +28,7 @@ use v5.12.5;
 #     1;
 # };
 
-our $VERSION = eval '0.3';
+our $VERSION = eval '0.4';
 
 =head1 NAME
 
@@ -36,7 +36,7 @@ NetAddr::IP::FastNew - NetAddr::IP new() methods with no validation
 
 =head1 VERSION
 
-0.3
+0.4
 
 =head1 SYNOPSIS
 
