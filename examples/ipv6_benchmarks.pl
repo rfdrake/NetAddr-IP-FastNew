@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use NetAddr::IP qw (Ones);
 use NetAddr::IP::Util qw (shiftleft);
-use Socket qw (inet_pton AF_INET6);
+use Socket qw (inet_pton AF_INET6 getaddrinfo SOCK_RAW);
 use Math::BigInt;
 use lib './lib';
 
@@ -154,7 +154,7 @@ use Benchmark qw (cmpthese);
 my $ones = Math::BigInt->new( 2 )->bpow( 128 );
 
 cmpthese(-3, {
-    'math:;bigint' => sub {
+    'math::bigint' => sub {
         my ($ip, $cidr) = split('/', 'fe80::/64');
         my $mask = $ones - Math::BigInt->new( 2 )->bpow( 128 - $cidr );
         $mask = pack('N4', $mask);
@@ -178,6 +178,13 @@ cmpthese(-3, {
         my $cidr = substr($str, $pos+1);
         my $mask = $masks->{$cidr};
         bless { 'addr' => inet_pton(AF_INET6, $ip), 'mask' => $mask, 'isv6' => 1 }, 'NetAddr::IP';
+    },
+    'getaddrinfo' => sub {
+        my $str = 'fe80::';
+        my $mask = $masks->{64};
+        my ($err, @res) = getaddrinfo($str, '', {socktype => SOCK_RAW});
+        die "Cannot getaddrinfo - $err" if $err;
+        bless { 'addr' => $res[1]->{addr}, 'mask' => $mask, 'isv6' => 1 }, 'NetAddr::IP';
     },
     # for some reason inet_pton slows down if you pass it a substr() directly.
     # my $ip = substr(); is faster
